@@ -1,3 +1,6 @@
+import os
+import urllib
+import requests
 from flask import redirect, render_template, request, session
 from functools import wraps
 
@@ -13,3 +16,22 @@ def login_required(f):
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
+
+
+def lookup(movie):
+    """Look up quote for symbol."""
+
+    for char in movie:
+        apientry = movie.strip().replace(" ", "+")
+    # Contact API
+    try:
+        api_key = os.environ.get("API_KEY")
+        url = f"http://www.omdbapi.com/?apikey={api_key}&s={urllib.parse.quote_plus(movie)}"
+        response = requests.get(url)
+        response.raise_for_status()
+        print(response)
+        quote = response.json()
+        return quote
+    except requests.RequestException:
+        return None
+
