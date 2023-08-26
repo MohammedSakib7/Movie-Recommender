@@ -30,7 +30,7 @@ if not os.environ.get("API_KEY"):
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        return f"did it work? {lookup(request.form.get('search'))}"
+        return redirect(url_for("search", Json_result=lookup(request.form.get('search'))))
     else:
         return render_template("index.html")
 
@@ -55,6 +55,10 @@ def user():
     else:
         return render_template(url_for("login"))
 
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    x = lookup(request.form.get("search"))
+    return render_template("search.html", json_results=x)
 
 if __name__ == "__main__":
     app.run(debug=True)

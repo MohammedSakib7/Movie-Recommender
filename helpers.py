@@ -29,9 +29,23 @@ def lookup(movie):
         url = f"http://www.omdbapi.com/?apikey={api_key}&s={urllib.parse.quote_plus(movie)}"
         response = requests.get(url)
         response.raise_for_status()
-        print(response)
-        quote = response.json()
-        return quote
     except requests.RequestException:
         return None
+    
+    try:
+        srch = response.json() 
+        # results = {
+        #     "title": srch["Title"],
+        #     "year": srch["year"],
+        #     "symbol": srch["symbol"],
+        #     "imdbID": srch["imdbID"],
+        #     "type" : srch["Type"],
+        # }
+        # if srch["poster"]:
+        #     results["poster"] = srch["poster"]
+        
+        return srch['Search']
+    except (KeyError, TypeError, ValueError):
+        return None
+
 
