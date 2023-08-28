@@ -6,7 +6,7 @@ import datetime as d
 import os
 
 # Import login decorator from helpers function
-from helpers import login_required, lookup
+from helpers import login_required, lookup, titlepage
 
 # Initialize flask framework
 app = Flask(__name__)
@@ -74,6 +74,10 @@ def search():
     if x:
         print(x)
     return render_template("search.html", json_results=x)
+
+@app.route("/moviepage/<imdbID>")
+def moviepage(imdbID):
+    return f"{titlepage(imdbID)}"
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -21,8 +21,6 @@ def login_required(f):
 def lookup(movie):
     """Look up quote for symbol."""
 
-    for char in movie:
-        apientry = movie.strip().replace(" ", "+")
     # Contact API
     try:
         api_key = os.environ.get("API_KEY")
@@ -48,4 +46,20 @@ def lookup(movie):
     except (KeyError, TypeError, ValueError):
         return None
 
+def titlepage(imdbID):
+    try:
+        api_key = os.environ.get("API_KEY")
+        url = f"http://www.omdbapi.com/?apikey={api_key}&i={imdbID}"
+        response = requests.get(url)
+        response.raise_for_status()
+    except requests.RequestException:
+        print("promblem here")
+        return None
+    
+    try:
+        srch = response.json() 
+        return srch
+    except (KeyError, TypeError, ValueError):
+        print("no the promblem here")
+        return None
 

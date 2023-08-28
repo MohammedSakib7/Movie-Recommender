@@ -9,9 +9,9 @@
             {% for movie in json_results %}
             <li class = "list-group-item"> 
                 {% if movie['Poster'] !=  'N/A' %}
-                <div class="movie-poster"><img class="search-poster" src="{{movie['Poster']}}"></div>
+                <div class="movie-poster"><a href="/moviepage/{{movie['imdbID']}}"><img class="search-poster" src="{{movie['Poster']}}"></a></div>
                 {% endif %}
-                <div class="movie-title">{{movie['Title']}} ({{movie['Year']}})
+                <div class="movie-title"><a href="/moviepage/{{movie['imdbID']}}">{{movie['Title']}} ({{movie['Year']}})</a>
                     <div style="text-align: left;">
                         Type: {{movie['Type'].capitalize()}}
                     </div>
