@@ -3,14 +3,24 @@
 {% block title %}Search Results{% endblock %}
 
 {% block main %}
-    <spanp>
-        {% for movie in json_results %}
-            <div>
-                Title: {{movie['Title']}}, Type: {{movie['Type']}}, Year:{{movie['Year']}}
+    <div>
+        <ul class="list-group">
+            {% if json_results %}
+            {% for movie in json_results %}
+            <li class = "list-group-item"> 
                 {% if movie['Poster'] !=  'N/A' %}
-                    <img src="{{movie['Poster']}}">
+                <div class="movie-poster"><img class="search-poster" src="{{movie['Poster']}}"></div>
                 {% endif %}
-            </div>
-        {% endfor %}
-    </span>
+                <div class="movie-title">{{movie['Title']}} ({{movie['Year']}})
+                    <div style="text-align: left;">
+                        Type: {{movie['Type'].capitalize()}}
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+            {% else %}
+            <h1>No Results Found</h1>
+            {% endif %}
+        </ul>
+        </div>
 {% endblock %}
